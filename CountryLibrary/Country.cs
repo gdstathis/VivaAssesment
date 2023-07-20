@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +11,28 @@ namespace CountryLibrary
 {
     public class Country
     {
-        public Name name { get; set; }
-        public List<string> capital { get; set; }
+        private string _nameOfCountry;
 
+        public int Id { get; set; }
+        [NotMapped]
+        [Key]
+        public Name name { get; set; }
+
+        [Column("Name")]
+        public string NameOfCountry
+        {
+            get { return _nameOfCountry; }
+            set
+            {
+                if (name == null)
+                    _nameOfCountry = string.Empty;
+                else
+                    _nameOfCountry = name.common.FirstOrDefault().ToString();
+            }
+        }
+        [NotMapped]
+        public List<string> capital { get; set; }
+        [NotMapped]
         public List<string> borders { get; set; }
 
     }

@@ -1,3 +1,5 @@
+using Country.DataAccess.Database;
+using Microsoft.EntityFrameworkCore;
 using SecondMaxFinderLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SecondMaxFinder>();
-
+builder.Services.AddDbContext<Country.DataAccess.Database.ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
