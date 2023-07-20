@@ -17,7 +17,7 @@ namespace Country.DataAccess.Repository
             _db = db;
         }
 
-        public void Insert(CountryLibrary.Country country)
+        public void Add(CountryLibrary.Country country)
         {
             try
             {

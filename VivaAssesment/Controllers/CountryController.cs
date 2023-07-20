@@ -11,11 +11,11 @@ namespace VivaAssesment.Controllers
     public class CountryController : Controller
     {
         private readonly HttpClient _httpClient;
-        private readonly ICountryRepository _countryRepository;
-        public CountryController(ICountryRepository countryRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CountryController(IUnitOfWork unitOfWork)
         {
             _httpClient = new HttpClient();
-            _countryRepository = countryRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace VivaAssesment.Controllers
                 var countriesData = JsonConvert.DeserializeObject<List<CountryLibrary.Country>>(jsonResponse);
                 foreach (var country in countriesData)
                 {
-                    _countryRepository.Insert(country);
+                    _unitOfWork.Country.Add(country);
 
                 }
                 return Ok(countriesData);

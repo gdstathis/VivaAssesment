@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SecondMaxFinder>();
 builder.Services.AddDbContext<Country.DataAccess.Database.ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<Country.DataAccess.Repository.ICountryRepository, Country.DataAccess.Repository.CountryRepository>();
+builder.Services.AddScoped<Country.DataAccess.Repository.IUnitOfWork, Country.DataAccess.Repository.UnitOfWork>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

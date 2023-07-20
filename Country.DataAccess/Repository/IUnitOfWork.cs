@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Country.DataAccess.Repository
 {
-    public interface ICountryRepository
+    public interface IUnitOfWork
     {
-        void Add(CountryLibrary.Country country);
+        ICountryRepository Country { get; }
+        void Save();
     }
 }
