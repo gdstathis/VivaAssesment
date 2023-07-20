@@ -26,7 +26,6 @@ namespace VivaAssesment.Controllers
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 var countriesData = JsonConvert.DeserializeObject<List<Country>>(jsonResponse);
-
                 return Ok(countriesData);
             }
             else
