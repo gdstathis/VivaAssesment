@@ -1,4 +1,5 @@
-﻿using CountryLibrary;
+﻿using Country.DataAccess.Repository;
+using CountryLibrary;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -10,10 +11,11 @@ namespace VivaAssesment.Controllers
     public class CountryController : Controller
     {
         private readonly HttpClient _httpClient;
-
-        public CountryController()
+        private readonly ICountryRepository _countryRepository;
+        public CountryController(ICountryRepository countryRepository)
         {
             _httpClient = new HttpClient();
+            _countryRepository = countryRepository;
         }
 
         [HttpGet]
@@ -26,6 +28,12 @@ namespace VivaAssesment.Controllers
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 var countriesData = JsonConvert.DeserializeObject<List<CountryLibrary.Country>>(jsonResponse);
+                foreach (var country in countriesData)
+                {
+
+                    _countryRepository.Insert(country);
+
+                }
                 return Ok(countriesData);
             }
             else

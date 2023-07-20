@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using CountryLibrary;
 namespace Country.DataAccess.Database
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
 
-        public DbSet<CountryLibrary.Country> Countries { get; set; }
+        public DbSet<CountryLibrary.CountryRecord> Countries { get; set; }
     }
 }
