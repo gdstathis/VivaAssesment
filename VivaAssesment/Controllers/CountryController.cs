@@ -30,7 +30,6 @@ namespace VivaAssesment.Controllers
                 var countriesData = JsonConvert.DeserializeObject<List<CountryLibrary.Country>>(jsonResponse);
                 foreach (var country in countriesData)
                 {
-
                     _countryRepository.Insert(country);
 
                 }

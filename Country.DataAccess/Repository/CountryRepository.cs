@@ -22,20 +22,20 @@ namespace Country.DataAccess.Repository
             try
             {
 
-                _db.Countries.Add(Foo(country));
+                _db.Countries.Add(BuildCountryRecord(country));
                 _db.SaveChanges();
             }
             catch (Exception ex) { }
         }
 
-        public CountryRecord Foo(CountryLibrary.Country country)
+        public CountryRecord BuildCountryRecord(CountryLibrary.Country country)
         {
             CountryRecord record = new CountryRecord();
             record.Capital = (country.Capital != null
-                || country.Capital.Count() > 1) ? country.Capital[0] : "";
+                && country.Capital.Count() > 0) ? country.Capital[0] : "";
             record.Name = country.Name.common;
-            record.Borders = (country.Borders!=null)?
-                String.Join(",", country.Borders):"";
+            record.Borders = (country.Borders != null) ?
+                String.Join(",", country.Borders) : "";
             return record;
         }
     }
