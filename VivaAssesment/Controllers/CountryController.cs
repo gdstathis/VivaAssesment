@@ -1,5 +1,7 @@
 ﻿using Country.DataAccess.Repository;
+using Country.DataAccess.Urls;
 using CountryLibrary;
+using CountryLibrary.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -14,16 +16,14 @@ namespace VivaAssesment.Controllers
         private readonly IUnitOfWork _unitOfWork;
         public CountryController(IUnitOfWork unitOfWork)
         {
-            _httpClient = new HttpClient();
+            _httpClient = HttpClientConfiguration.HttpConfig(_httpClient);
             _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCountries()
         {
-            var apiUrl = "https://restcountries.com/v3.1/all";
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await _httpClient.GetAsync(apiUrl);
+            var response = await _httpClient.GetAsync(Urls.UrlOfCountryApi);
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
