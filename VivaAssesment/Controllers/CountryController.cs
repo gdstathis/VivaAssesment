@@ -1,10 +1,8 @@
-﻿using Country.DataAccess.Repository;
-using Country.DataAccess.Urls;
-using CountryLibrary;
+﻿using Country.DataAccess.CacheMemoryConfig;
+using Country.DataAccess.Repository;
 using CountryLibrary.Extensions;
+using CountryLibrary.Urls;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
 
 namespace VivaAssesment.Controllers
 {
@@ -14,30 +12,51 @@ namespace VivaAssesment.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly IUnitOfWork _unitOfWork;
-        public CountryController(IUnitOfWork unitOfWork)
+        private readonly ICacheMemoryConfig _memoryCacheConfig;
+
+        public CountryController(IUnitOfWork unitOfWork, ICacheMemoryConfig memoryCacheConfig)
         {
-            _httpClient = HttpClientConfiguration.HttpConfig(_httpClient);
+            _httpClient = HttpClientConfiguration.HttpConfig();
             _unitOfWork = unitOfWork;
+            _memoryCacheConfig = memoryCacheConfig;
         }
 
+        /// <summary>
+        /// Todo: simplify this method 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetCountries()
         {
-            var response = await _httpClient.GetAsync(Urls.UrlOfCountryApi);
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                var countriesData = JsonConvert.DeserializeObject<List<CountryLibrary.Country>>(jsonResponse);
-                foreach (var country in countriesData)
-                {
-                    _unitOfWork.Country.Add(country);
+            List<Country.DataAccess.Model.Country> countriesData = new List<Country.DataAccess.Model.Country>();
 
-                }
-                return Ok(countriesData);
+            if (_memoryCacheConfig.CacheHasData())
+            {
+                return Ok(_memoryCacheConfig.GetCachedData());
             }
             else
             {
-                return StatusCode((int)response.StatusCode, $"Failed to retrieve countries: {response.StatusCode}");
+                if (_unitOfWork.Country.DbHasCountries())
+                {
+                    countriesData = _unitOfWork.Country.GetCountries().ToList();
+                    _memoryCacheConfig.SetCache(countriesData.ToList());
+                }
+                else
+                {
+                    var response = await _httpClient.GetAsync(Urls.UrlOfCountryApi);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResponse = await response.Content.ReadAsStringAsync();
+                        countriesData = DeserializeJsonObject.DeserializeToCountries(jsonResponse);
+                        _unitOfWork.Country.AddRange(countriesData);
+                        _memoryCacheConfig.SetCache(countriesData.ToList());
+                    }
+                    else
+                    {
+                        return StatusCode((int)response.StatusCode, $"Failed to retrieve countries: {response.StatusCode}");
+                    }
+                }
+                return Ok(countriesData);
             }
         }
     }

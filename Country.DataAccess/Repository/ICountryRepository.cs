@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Country.DataAccess.Repository
+﻿namespace Country.DataAccess.Repository
 {
     public interface ICountryRepository
     {
-        void Add(CountryLibrary.Country country);
+        void Add(Model.Country country);
+        void AddRange(List<Model.Country> countries);
+        List<Model.Country> GetCountries();
+        bool DbHasCountries();
     }
 }

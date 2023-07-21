@@ -1,9 +1,4 @@
 ﻿using Country.DataAccess.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Country.DataAccess.Repository
 {
@@ -11,6 +6,7 @@ namespace Country.DataAccess.Repository
     {
         public ApplicationDbContext _db;
         public ICountryRepository Country { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;

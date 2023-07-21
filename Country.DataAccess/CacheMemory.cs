@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CountryLibrary
+namespace Country.DataAccess
 {
-    public class BuildCountryRecord
+    public class CacheMemory : ICacheMemory
     {
-
     }
-
 }

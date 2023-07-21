@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Country.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230720152820_initDb")]
-    partial class initDb
+    [Migration("20230721193645_InitialDatabase")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,20 +24,22 @@ namespace Country.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CountryLibrary.CountryRecord", b =>
+            modelBuilder.Entity("Country.DataAccess.Model.Country", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("NameOfCountry")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("NAME");
 
-                    b.Property<string>("Borders")
+                    b.Property<string>("Border")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("BORDERS");
+
+                    b.Property<string>("CapitalCountry")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CAPITAL");
 
-                    b.Property<string>("Capital")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Name");
+                    b.HasKey("NameOfCountry");
 
                     b.ToTable("Countries");
                 });

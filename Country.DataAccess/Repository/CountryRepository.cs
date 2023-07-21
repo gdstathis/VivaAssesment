@@ -1,10 +1,4 @@
 ﻿using Country.DataAccess.Database;
-using CountryLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Country.DataAccess.Repository
 {
@@ -17,26 +11,60 @@ namespace Country.DataAccess.Repository
             _db = db;
         }
 
-        public void Add(CountryLibrary.Country country)
+        /// <summary>
+        /// Save country record in database
+        /// </summary>
+        /// <param name="country"></param>
+        public void Add(Model.Country country)
         {
             try
             {
-
-                _db.Countries.Add(BuildCountryRecord(country));
+                _db.Countries.Add(country);
                 _db.SaveChanges();
+            }
+            catch (Exception ex) { }
+
+        }
+
+        /// <summary>
+        /// Add multiple records of country in database
+        /// </summary>
+        /// <param name="countries"></param>
+        public void AddRange(List<Model.Country> countries)
+        {
+            try
+            {
+                foreach (Model.Country country in countries)
+                {
+                    Add(country);
+                }
             }
             catch (Exception ex) { }
         }
 
-        public CountryRecord BuildCountryRecord(CountryLibrary.Country country)
+        /// <summary>
+        /// Retrieve all countries from database
+        /// </summary>
+        /// <returns></returns>
+        public List<Model.Country> GetCountries()
         {
-            CountryRecord record = new CountryRecord();
-            record.Capital = (country.Capital != null
-                && country.Capital.Count() > 0) ? country.Capital[0] : "";
-            record.Name = country.Name.common;
-            record.Borders = (country.Borders != null) ?
-                String.Join(",", country.Borders) : "";
-            return record;
+            List<Model.Country> countries = new List<Model.Country>();
+            try
+            {
+                countries = _db.Countries.ToList();
+            }
+            catch (Exception ex) { }
+            return countries;
+
+        }
+
+        /// <summary>
+        /// Check if database contains any country
+        /// </summary>
+        /// <returns></returns>
+        public bool DbHasCountries()
+        {
+            return _db.Countries.Any();
         }
     }
 }

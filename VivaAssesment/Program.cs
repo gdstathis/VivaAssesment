@@ -1,5 +1,7 @@
+using Country.DataAccess.CacheMemoryConfig;
 using Country.DataAccess.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using SecondMaxFinderLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddTransient<SecondMaxFinder>();
 builder.Services.AddDbContext<Country.DataAccess.Database.ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<Country.DataAccess.Repository.IUnitOfWork, Country.DataAccess.Repository.UnitOfWork>();
+builder.Services.AddScoped<ICacheMemoryConfig, CacheMemoryConfig>();
+builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,7 +5,7 @@
 namespace Country.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class InitialDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,13 +14,13 @@ namespace Country.DataAccess.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Capital = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Borders = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NAME = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CAPITAL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BORDERS = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Name);
+                    table.PrimaryKey("PK_Countries", x => x.NAME);
                 });
         }
 

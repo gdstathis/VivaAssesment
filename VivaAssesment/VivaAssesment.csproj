@@ -23,7 +23,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\VivaProject\SecondMaxFinderLibrary\SecondMaxFinderLibrary.csproj" />
 		<ProjectReference Include="..\Country.DataAccess\Country.DataAccess.csproj" />
-		<ProjectReference Include="..\CountryLibrary\CountryLibrary.csproj" />
 	</ItemGroup>
 
 </Project>
