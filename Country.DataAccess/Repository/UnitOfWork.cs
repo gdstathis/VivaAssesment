@@ -12,7 +12,10 @@ namespace Country.DataAccess.Repository
             _db = db;
             Country = new CountryRepository(_db);
         }
-
+        /// <summary>
+        /// Save the changes of the database when an 
+        /// entity modified/deleted/added
+        /// </summary>
         public void Save()
         {
             _db.SaveChanges();

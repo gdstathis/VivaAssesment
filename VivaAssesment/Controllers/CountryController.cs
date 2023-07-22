@@ -47,8 +47,8 @@ namespace VivaAssesment.Controllers
                     var response = await _httpClient.GetAsync(Urls.UrlOfCountryApi);
                     if (response.IsSuccessStatusCode)
                     {
-                        var jsonResponse = await response.Content.ReadAsStringAsync();
-                        countriesData = DeserializeJsonObject.DeserializeToCountries(jsonResponse);
+                        countriesData = await BindCountryFromResponse
+                                    .GetCountriesFromRespones(response);
                         _unitOfWork.Country.AddRange(countriesData);
                         _memoryCacheConfig.SetCache(countriesData.ToList());
                     }
