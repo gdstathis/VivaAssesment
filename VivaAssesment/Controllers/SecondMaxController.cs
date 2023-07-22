@@ -15,7 +15,7 @@ namespace VivaAssesment.Controllers
         }
 
         [HttpPost]
-        public IActionResult SecondMax(RequestObj requestObj)
+        public IActionResult SecondMax([FromBody] RequestObj requestObj)
         {
             try
             {
@@ -23,14 +23,19 @@ namespace VivaAssesment.Controllers
                 {
                     return BadRequest("BadRequest");
                 }
-                if (requestObj.RequestArrayObj.Count() < 2)
+                else if (requestObj.RequestArrayObj.Count() < 2)
                 {
-                    return BadRequest("Arguments should be 2 or more");
+                    return BadRequest("Arguments should be 2 or more numbers");
                 }
-                IEnumerable<int> numbersArray = requestObj.RequestArrayObj;
-                int? secondLargest = _secondMaxFinder.FindSecondMax(numbersArray);
+                else if (requestObj.RequestArrayObj.Any(item => !int.TryParse(item.ToString(), out _)))
+                {
+                    return BadRequest("Invalid input. All elements in the request input must be numbers.");
+                }
 
-                return Ok(secondLargest);
+                int? secondMax =
+                    _secondMaxFinder.FindSecondMax((IEnumerable<int>?)requestObj.RequestArrayObj);
+
+                return Ok(secondMax);
             }
             catch (Exception ex)
             {

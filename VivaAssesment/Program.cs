@@ -8,8 +8,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<SecondMaxFinder>();
-
+builder.Services.AddScoped<SecondMaxFinder>();
+builder.Services.AddMvc().AddNewtonsoftJson();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
