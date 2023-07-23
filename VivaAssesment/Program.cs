@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using NLog.Web;
 using SecondMaxFinderLibrary;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SecondMaxFinder>();
 builder.Services.AddMvc().AddNewtonsoftJson();
+
 builder.Services.AddDbContext<Country.DataAccess.Database.ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<Country.DataAccess.Repository.IUnitOfWork, Country.DataAccess.Repository.UnitOfWork>();

@@ -4,8 +4,8 @@ using Country.DataAccess.Extensions.Urls;
 using Country.DataAccess.Repository;
 using CountryLibrary.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NLog;
-using System.Text.Json;
 using ILogger = NLog.ILogger;
 
 namespace VivaAssesment.Controllers
@@ -70,7 +70,8 @@ namespace VivaAssesment.Controllers
                 _logger.Error(ex, nameof(GetCountries));
                 return BadRequest("An error has been occured. Please check log file");
             }
-            return Ok(JsonSerializer.Serialize(countriesData));
+
+            return Ok(countriesData);
         }
     }
 }
