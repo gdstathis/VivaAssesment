@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Country.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230721193645_InitialDatabase")]
+    [Migration("20230723125337_InitialDatabase")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -37,7 +37,15 @@ namespace Country.DataAccess.Migrations
                     b.Property<string>("CapitalCountry")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CAPITAL");
+                        .HasColumnName("CAPITAL")
+                        .HasAnnotation("Relational:JsonPropertyName", "capital");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("NameOfCountry");
 

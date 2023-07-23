@@ -1,12 +1,7 @@
 using Country.DataAccess.Database;
 using Country.DataAccess.Extensions;
 using Country.DataAccess.Repository;
-using CountryLibrary.Extensions;
-using CountryLibrary.Urls;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Moq;
-using System.Net.Http;
 
 namespace CountryTestProject
 {

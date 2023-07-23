@@ -7,6 +7,11 @@ namespace Country.DataAccess.Model
 {
     public class Country
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("ID")]
+        [JsonIgnore]
+        public int Id { get; set; }
+
         [NotMapped]
         public Name Name { get; set; }
 

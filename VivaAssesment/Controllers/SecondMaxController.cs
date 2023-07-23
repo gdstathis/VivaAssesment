@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using SecondMaxFinderLibrary;
 
 namespace VivaAssesment.Controllers
@@ -15,7 +16,7 @@ namespace VivaAssesment.Controllers
         }
 
         [HttpPost]
-        public IActionResult SecondMax([FromBody] RequestObj requestObj)
+        public IActionResult SecondMax([FromBody] RequestObj? requestObj)
         {
             try
             {
@@ -29,11 +30,12 @@ namespace VivaAssesment.Controllers
                 }
                 else if (requestObj.RequestArrayObj.Any(item => !int.TryParse(item.ToString(), out _)))
                 {
-                    return BadRequest("Invalid input. All elements in the request input must be numbers.");
+                    return BadRequest("Invalid input. All elements in the request input must be integers.");
                 }
 
                 int? secondMax =
-                    _secondMaxFinder.FindSecondMax((IEnumerable<int>?)requestObj.RequestArrayObj);
+                    _secondMaxFinder.FindSecondMax(
+                        (IEnumerable<int>)requestObj.RequestArrayObj.Select(item => Convert.ToInt32(item)));
 
                 return Ok(secondMax);
             }

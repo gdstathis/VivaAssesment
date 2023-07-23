@@ -1,8 +1,8 @@
 ﻿using Country.DataAccess.CacheMemoryConfig;
 using Country.DataAccess.Extensions;
+using Country.DataAccess.Extensions.Urls;
 using Country.DataAccess.Repository;
 using CountryLibrary.Extensions;
-using CountryLibrary.Urls;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System.Text.Json;
