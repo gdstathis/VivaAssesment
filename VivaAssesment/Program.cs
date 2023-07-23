@@ -1,8 +1,8 @@
 using Country.DataAccess.CacheMemoryConfig;
-using Country.DataAccess.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using SecondMaxFinderLibrary;
+using NLog;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 

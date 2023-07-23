@@ -13,6 +13,7 @@ namespace Country.DataAccess.Repository
             _db = db;
             this.dbSet = _db.Set<T>();
         }
+
         /// <summary>
         /// Returns the first element that satisfies the
         /// specified condition(filter).
@@ -25,6 +26,7 @@ namespace Country.DataAccess.Repository
             query = query.Where(filter);
             return query.FirstOrDefault();
         }
+
         /// <summary>
         /// Retrieve all records from the database
         /// </summary>
@@ -34,6 +36,7 @@ namespace Country.DataAccess.Repository
             IQueryable<T> query = dbSet;
             return query.ToList();
         }
+
         /// <summary>
         /// Add new record in to database
         /// </summary>

@@ -15,7 +15,7 @@ namespace SecondMaxFinderTestProject
         /// it should return correct result (etc. 8)
         /// </summary>
         [Fact]
-        public void FindSecondLargest_CorrectResult()
+        public void FindSecondMax_CorrectResult()
         {
             var inputArray = new List<int> { 5, 2, 8, 1, 9, 3 };
 
@@ -28,7 +28,7 @@ namespace SecondMaxFinderTestProject
         /// Should return null if given list is empty
         /// </summary>
         [Fact]
-        public void FindSecondLargest_ShouldReturnNullIfListIsEmpty()
+        public void FindSecondMax_ShouldReturnNullIfListIsEmpty()
         {
             var inputArray = new List<int>();
 
@@ -41,7 +41,7 @@ namespace SecondMaxFinderTestProject
         /// Should return number when list contains same numbers
         /// </summary>
         [Fact]
-        public void FindSecondLargest_ListContainsSameNumbers()
+        public void FindSecondMax_ListContainsSameNumbers()
         {
             var inputArray = new List<int> { 5, 5, 5, 5, 5, 5 };
 

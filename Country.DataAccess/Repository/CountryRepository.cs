@@ -1,14 +1,17 @@
 ﻿using Country.DataAccess.Database;
+using NLog;
 
 namespace Country.DataAccess.Repository
 {
     public class CountryRepository : ICountryRepository
     {
         private ApplicationDbContext _db;
+        private readonly ILogger _logger;
 
         public CountryRepository(ApplicationDbContext db)
         {
             _db = db;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         /// <summary>
@@ -22,7 +25,7 @@ namespace Country.DataAccess.Repository
                 _db.Countries.Add(country);
                 _db.SaveChanges();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { _logger.Error(ex, nameof(Add)); }
 
         }
 
@@ -39,7 +42,7 @@ namespace Country.DataAccess.Repository
                     Add(country);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { _logger.Error(ex, nameof(AddRange)); }
         }
 
         /// <summary>
@@ -53,7 +56,7 @@ namespace Country.DataAccess.Repository
             {
                 countries = _db.Countries.ToList();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { _logger.Error(ex, nameof(GetCountries)); }
             return countries;
 
         }
@@ -64,7 +67,13 @@ namespace Country.DataAccess.Repository
         /// <returns></returns>
         public bool DbHasCountries()
         {
-            return _db.Countries.Any();
+            bool result = false;
+            try
+            {
+                result = _db.Countries.Any();
+            }
+            catch (Exception ex) { _logger.Error(ex, nameof(DbHasCountries)); }
+            return result;
         }
     }
 }

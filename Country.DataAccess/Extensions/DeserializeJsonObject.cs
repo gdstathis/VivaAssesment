@@ -8,7 +8,7 @@ namespace Country.DataAccess.Extensions
         /// </summary>
         /// <param name="jsonObject"></param>
         /// <returns></returns>
-        public static List<Country.DataAccess.Model.Country> DeserializeToCountries(string jsonObject)
+        public static List<Model.Country> DeserializeToCountries(string jsonObject)
         {
             return JsonConvert.DeserializeObject<List<Model.Country>>(jsonObject);
         }

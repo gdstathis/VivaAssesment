@@ -4,6 +4,6 @@
     {
         bool CacheHasData();
         void SetCache(List<Model.Country> countries);
-        List<Model.Country> GetCachedData();
+        List<Model.Country>? GetCachedData();
     }
 }
