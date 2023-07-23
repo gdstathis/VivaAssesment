@@ -34,15 +34,7 @@ namespace Country.DataAccess.Migrations
                     b.Property<string>("CapitalCountry")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CAPITAL")
-                        .HasAnnotation("Relational:JsonPropertyName", "capital");
-
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnName("CAPITAL");
 
                     b.HasKey("NameOfCountry");
 

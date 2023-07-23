@@ -6,6 +6,7 @@ using CountryLibrary.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NLog;
+using System.Text.Json.Nodes;
 using ILogger = NLog.ILogger;
 
 namespace VivaAssesment.Controllers
@@ -53,6 +54,8 @@ namespace VivaAssesment.Controllers
                         var response = await _httpClient.GetAsync(Urls.UrlOfCountryApi);
                         if (response.IsSuccessStatusCode)
                         {
+                            var jsonResponse = await response.Content.ReadAsStringAsync();
+                            countriesData = JsonConvert.DeserializeObject<List<Country.DataAccess.Model.Country>>(jsonResponse);
                             countriesData = await BindCountryFromResponse
                                         .GetCountriesFromRespones(response);
                             _unitOfWork.Country.AddRange(countriesData);

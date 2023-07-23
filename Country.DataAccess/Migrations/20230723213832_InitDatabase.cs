@@ -5,7 +5,7 @@
 namespace Country.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDatabase : Migration
+    public partial class InitDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,6 @@ namespace Country.DataAccess.Migrations
                 columns: table => new
                 {
                     NAME = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     CAPITAL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BORDERS = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

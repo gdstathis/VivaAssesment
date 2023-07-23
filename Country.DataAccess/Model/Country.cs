@@ -2,35 +2,29 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Country.DataAccess.Model
 {
     public class Country
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("ID")]
-        [IgnoreDataMember]
-        public int Id { get; set; }
-
         [NotMapped]
-        public Name Name { get; set; }
+        public Name? Name { get; set; }
 
         [Key]
         [Column("NAME")]
-        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
         public string NameOfCountry
         {
             get { return Name?.Common ?? string.Empty; }
             set { Name = new Name { Common = value }; }
         }
 
-        [NotMapped, IgnoreDataMember]
+        [NotMapped]
         public List<string> Capital { get; set; }
 
         [Column("CAPITAL")]
-        [JsonProperty("capital")]
+        [Newtonsoft.Json.JsonIgnore]
         public string CapitalCountry
         {
             get { return Capital?.FirstOrDefault() ?? string.Empty; }
@@ -38,7 +32,7 @@ namespace Country.DataAccess.Model
         }
 
         [Column("BORDERS")]
-        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
         public string? Border
         {
             get
@@ -51,6 +45,7 @@ namespace Country.DataAccess.Model
 
         [NotMapped]
         public List<string> Borders { get; set; }
+
         public Country()
         {
             Name = new Name();
