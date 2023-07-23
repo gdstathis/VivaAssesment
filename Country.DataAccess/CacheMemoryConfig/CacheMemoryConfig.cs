@@ -1,18 +1,18 @@
-﻿using Country.DataAccess.Repository;
+﻿using Country.DataAccess.Extensions;
 using Microsoft.Extensions.Caching.Memory;
+using NLog;
 
 namespace Country.DataAccess.CacheMemoryConfig
 {
     public class CacheMemoryConfig : ICacheMemoryConfig
     {
-        private const string _key = "countries";
         private readonly IMemoryCache _memoryCache;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public CacheMemoryConfig(IMemoryCache memoryCache, IUnitOfWork unitOfWork)
+        public CacheMemoryConfig(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
-            _unitOfWork = unitOfWork;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Country.DataAccess.CacheMemoryConfig
         /// <returns></returns>
         public bool CacheHasData()
         {
-            return _memoryCache.TryGetValue(_key, out var value);
+            return _memoryCache.TryGetValue(CacheKeys.key, out var value);
         }
 
         /// <summary>
@@ -32,23 +32,23 @@ namespace Country.DataAccess.CacheMemoryConfig
         {
             try
             {
-                _memoryCache.Set(_key, countries);
+                _memoryCache.Set(CacheKeys.key, countries);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { _logger.Error(ex, nameof(SetCache)); }
         }
 
         /// <summary>
         /// Get countries from cache memory
         /// </summary>
         /// <returns></returns>
-        public List<Model.Country> GetCachedData()
+        public List<Model.Country>? GetCachedData()
         {
             List<Model.Country> countries = new List<Model.Country>();
             try
             {
-                countries=_memoryCache.Get<List<Model.Country>>(_key);
+                countries = _memoryCache.Get<List<Model.Country>>(CacheKeys.key);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { _logger.Error(ex, nameof(GetCachedData)); }
             return countries;
         }
 
